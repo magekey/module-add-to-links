@@ -1,0 +1,25 @@
+<?php
+/**
+ * Copyright © MageKey. All rights reserved.
+ */
+
+/** @var $block Magento\Catalog\Block\Product\ProductList\Item\AddTo\Compare */
+
+$_product = $block->getProduct();
+$_compareHelper = $this->helper('MageKey\AddToLinks\Helper\Compare');
+
+?>
+<a href="#"
+   class="action tocompare"
+   title="<?php echo $block->escapeHtml(__('Add to Compare')); ?>"
+   aria-label="<?php echo $block->escapeHtml(__('Add to Compare')); ?>"
+   data-mage-init='{
+       "MageKey_AddToLinks/js/add-to-compare": {
+           "productId": <?php /* @escapeNotVerified */ echo $_product->getId(); ?>,
+           "addParams": <?php /* @escapeNotVerified */ echo $_compareHelper->getPostDataParams($_product); ?>,
+           "removeParams": <?php /* @escapeNotVerified */ echo $_compareHelper->getPostDataRemove($_product); ?>
+       }
+   }'
+   role="button">
+    <span><?php /* @escapeNotVerified */ echo __('Add to Compare') ?></span>
+</a>

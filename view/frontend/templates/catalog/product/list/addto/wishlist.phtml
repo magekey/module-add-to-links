@@ -1,0 +1,27 @@
+<?php
+/**
+ * Copyright © MageKey. All rights reserved.
+ */
+
+/** @var $block Magento\Wishlist\Block\Catalog\Product\ProductList\Item\AddTo\Wishlist */
+
+$_product = $block->getProduct();
+$_wishlistHelper = $this->helper('MageKey\AddToLinks\Helper\Wishlist');
+
+?>
+<?php if ($block->getWishlistHelper()->isAllow()): ?>
+    <a class="action towishlist"
+       title="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
+       aria-label="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
+       data-mage-init='{
+           "MageKey_AddToLinks/js/add-to-wishlist": {
+               "productId": <?php /* @escapeNotVerified */ echo $_product->getId(); ?>,
+               "addParams": <?php /* @escapeNotVerified */ echo $_wishlistHelper->getAddParams($_product); ?>,
+               "removeParams": <?php /* @escapeNotVerified */ echo $_wishlistHelper->getRemoveParams($_product); ?>
+           }
+       }'
+       data-action="add-to-wishlist"
+       role="button">
+        <span><?php /* @escapeNotVerified */ echo __('Add to Wish List') ?></span>
+    </a>
+<?php endif; ?>
