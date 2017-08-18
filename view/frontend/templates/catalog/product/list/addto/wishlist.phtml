@@ -9,7 +9,7 @@ $_product = $block->getProduct();
 $_wishlistHelper = $this->helper('MageKey\AddToLinks\Helper\Wishlist');
 
 ?>
-<?php if ($block->getWishlistHelper()->isAllow()): ?>
+<?php if ($_wishlistHelper->isAllow()): ?>
     <a class="action towishlist"
        title="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
        aria-label="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
@@ -17,7 +17,8 @@ $_wishlistHelper = $this->helper('MageKey\AddToLinks\Helper\Wishlist');
            "MageKey_AddToLinks/js/add-to-wishlist": {
                "productId": <?php /* @escapeNotVerified */ echo $_product->getId(); ?>,
                "addParams": <?php /* @escapeNotVerified */ echo $_wishlistHelper->getAddParams($_product); ?>,
-               "removeParams": <?php /* @escapeNotVerified */ echo $_wishlistHelper->getRemoveParams($_product); ?>
+               "removeParams": <?php /* @escapeNotVerified */ echo $_wishlistHelper->getRemoveParams(); ?>,
+               "loginUrl": "<?php /* @escapeNotVerified */ echo $_wishlistHelper->getLoginUrl(); ?>"
            }
        }'
        data-action="add-to-wishlist"

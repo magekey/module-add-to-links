@@ -4,24 +4,67 @@
  */
 namespace MageKey\AddToLinks\Helper;
 
-class Compare extends \Magento\Catalog\Helper\Product\Compare
+use Magento\Catalog\Api\Data\ProductInterface;
+use Magento\Framework\Data\Helper\PostHelper;
+
+class Compare extends \Magento\Framework\App\Helper\AbstractHelper
 {
     /**
-     * {@inheritdoc}
+     * Route for compare add
      */
-    public function getAddUrl()
-    {
-        return $this->_getUrl('mgk_addtolinks/compare/add');
+    const ROUTE_COMPARE_ADD = 'mgk_addtolinks/compare/add';
+
+    /**
+     * Route for compare remove
+     */
+    const ROUTE_COMPARE_REMOVE = 'mgk_addtolinks/compare/remove';
+
+    /**
+     * @var PostHelper
+     */
+    protected $_postHelper;
+
+    /**
+     * @param \Magento\Framework\App\Helper\Context $context
+     * @param PostHelper $postHelper
+     */
+    public function __construct(
+        \Magento\Framework\App\Helper\Context $context,
+        PostHelper $postHelper
+    ) {
+        $this->_postHelper = $postHelper;
+        parent::__construct($context);
     }
 
     /**
-     * Get parameters to remove products from compare list
+     * Retrieve add params
      *
-     * @param Product $product
+     * @param ProductInterface $product
      * @return string
      */
-    public function getRemoveUrl()
+    public function getAddParams(ProductInterface $product)
     {
-        return $this->_getUrl('mgk_addtolinks/compare/remove');
+        return $this->_postHelper->getPostData(
+            $this->_getUrl(self::ROUTE_COMPARE_ADD),
+            ['product' => $product->getId()]
+        );
+    }
+
+    /**
+     * Retrieve remove params
+     *
+     * @param ProductInterface $product
+     * @return string
+     */
+    public function getRemoveParams(ProductInterface $product)
+    {
+        $data = [
+            \Magento\Framework\App\ActionInterface::PARAM_NAME_URL_ENCODED => '',
+            'product' => $product->getId(),
+        ];
+        return $this->_postHelper->getPostData(
+            $this->_getUrl(self::ROUTE_COMPARE_REMOVE),
+            $data
+        );
     }
 }

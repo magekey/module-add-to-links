@@ -5,6 +5,7 @@
 namespace MageKey\AddToLinks\CustomerData;
 
 use Magento\Customer\CustomerData\SectionSourceInterface;
+use Magento\Framework\DB\Select;
 
 class WishlistItems implements SectionSourceInterface
 {
@@ -27,8 +28,10 @@ class WishlistItems implements SectionSourceInterface
      */
     public function getSectionData()
     {
+        $items = $this->getItems();
         return [
-            'items' => $this->getItems()
+            'count' => count($items),
+            'items' => $items
         ];
     }
 
@@ -39,7 +42,13 @@ class WishlistItems implements SectionSourceInterface
      */
     public function getItems()
     {
-        $collection = $this->wishlistHelper->getWishlistItemCollection();
+        $wishlistCollection = $this->wishlistHelper->getWishlistItemCollection();
+        $collection = clone $wishlistCollection;
+        $collection->clear()
+            ->setPageSize(null)
+            ->getSelect()
+            ->reset(Select::LIMIT_COUNT)
+            ->reset(Select::LIMIT_OFFSET);
         $items = [];
         foreach ($collection as $wishlistItem) {
             $items[] = $this->getItemData($wishlistItem);

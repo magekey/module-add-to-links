@@ -4,9 +4,10 @@
 define([
     'ko',
     'jquery',
-    "Magento_Customer/js/customer-data",
-    "MageKey_AddToLinks/js/add-to-link"
-], function (ko, $, customerData) {
+    'Magento_Customer/js/customer-data',
+    'Magento_Customer/js/model/authentication-popup',
+    'MageKey_AddToLinks/js/add-to-link'
+], function (ko, $, customerData, authenticationPopup) {
     "use strict";
 
     var wishlistItems = ko.pureComputed(function () {
@@ -18,6 +19,11 @@ define([
     });
 
     $.widget('mage.mgkAddToWishlist', $.mage.mgkAddToLink, {
+
+        options: {
+            showAuthPopupIfAvailable: true,
+            loginUrl: null
+        },
 
         initItem: function () {
             var self = this;
@@ -38,7 +44,11 @@ define([
             if (customer && customer().firstname) {
                 self.sendAction();
             } else {
-
+                if (self.options.showAuthPopupIfAvailable && authenticationPopup.modalWindow != null) {
+                    authenticationPopup.showModal();
+                } else if(self.options.loginUrl) {
+                    window.location.href = self.options.loginUrl;
+                }
             }
             return false;
         }
