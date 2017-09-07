@@ -8,6 +8,7 @@ define([
 
     $.widget('mage.mgkAddToLink', {
 
+        activeCheck: false,
         options: {
             productId: null,
             addParams: {},
@@ -18,6 +19,7 @@ define([
         _create: function () {
             var self = this;
             self.initItem();
+            self.initElement();
             self.initValue();
             self.bindElement();
         },
@@ -26,24 +28,44 @@ define([
             return;
         },
 
-        initValue: function () {
+        initElement: function () {
             var self = this;
-            if (self.itemId()) {
-                self.triggerCheck(true);
+            if (self.element.is(':checkbox')) {
+                self.activeCheck = true;
             }
         },
 
-        triggerCheck: function (checked) {
+        initValue: function () {
             var self = this;
-            if (typeof checked == 'undefined') {
-                checked = !self.element.hasClass(self.options.checkedClass);
+            if (self.itemId()) {
+                self.checkElementState();
+                if (self.activeCheck) {
+                    self.element.prop('checked', true);
+                }
             }
-            if (checked) {
-                self.element.addClass(self.options.checkedClass);
+        },
+
+        getElementState: function () {
+            var self = this;
+            return self.element.hasClass(self.options.checkedClass);
+        },
+
+        checkElementState: function () {
+            var self = this;
+            self.element.addClass(self.options.checkedClass);
+        },
+
+        uncheckElementState: function () {
+            var self = this;
+            self.element.removeClass(self.options.checkedClass);
+        },
+
+        triggerElementState: function () {
+            if (this.getElementState()) {
+                this.uncheckElementState();
             } else {
-                self.element.removeClass(self.options.checkedClass);
+                this.checkElementState();
             }
-            return checked;
         },
 
         bindElement: function () {
@@ -54,14 +76,15 @@ define([
         },
 
         clickAction: function () {
-            this.sendAction();
-            return false;
+            var self = this;
+            self.triggerElementState();
+            self.sendAction();
+            return self.activeCheck;
         },
 
         sendAction: function () {
-            var self = this,
-                checked = self.triggerCheck();
-            if (checked) {
+            var self = this;
+            if (self.getElementState()) {
                 var data = self.options.addParams.data;
                 var action = self.options.addParams.action;
             } else {

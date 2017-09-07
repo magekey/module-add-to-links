@@ -42,7 +42,7 @@ define([
             var self = this,
                 customer = customerData.get('customer');
             if (customer && customer().firstname) {
-                self.sendAction();
+                return self._super();
             } else {
                 if (self.options.showAuthPopupIfAvailable && authenticationPopup.modalWindow != null) {
                     authenticationPopup.showModal();
