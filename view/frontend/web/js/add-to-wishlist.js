@@ -46,7 +46,7 @@ define([
             } else {
                 if (self.options.showAuthPopupIfAvailable && authenticationPopup.modalWindow != null) {
                     authenticationPopup.showModal();
-                } else if(self.options.loginUrl) {
+                } else if (self.options.loginUrl) {
                     window.location.href = self.options.loginUrl;
                 }
             }
