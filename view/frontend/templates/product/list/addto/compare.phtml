@@ -12,15 +12,15 @@ $_compareHelper = $this->helper('MageKey\AddToLinks\Helper\Compare');
 ?>
 <a href="#"
    class="action tocompare"
-   title="<?php echo $block->escapeHtml(__('Add to Compare')); ?>"
-   aria-label="<?php echo $block->escapeHtml(__('Add to Compare')); ?>"
+   title="<?= $block->escapeHtml(__('Add to Compare')); ?>"
+   aria-label="<?= $block->escapeHtml(__('Add to Compare')); ?>"
    data-mage-init='{
        "MageKey_AddToLinks/js/add-to-compare": {
-           "productId": <?php /* @escapeNotVerified */ echo $_product->getId(); ?>,
-           "addParams": <?php /* @escapeNotVerified */ echo $_compareHelper->getAddParams($_product); ?>,
-           "removeParams": <?php /* @escapeNotVerified */ echo $_compareHelper->getRemoveParams($_product); ?>
+           "productId": <?= /* @escapeNotVerified */ $_product->getId(); ?>,
+           "addParams": <?= /* @escapeNotVerified */ $_compareHelper->getAddParams($_product); ?>,
+           "removeParams": <?= /* @escapeNotVerified */ $_compareHelper->getRemoveParams($_product); ?>
        }
    }'
    role="button">
-    <span><?php /* @escapeNotVerified */ echo __('Add to Compare') ?></span>
+    <span><?= /* @escapeNotVerified */ __('Add to Compare') ?></span>
 </a>
