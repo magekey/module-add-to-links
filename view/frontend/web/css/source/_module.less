@@ -10,8 +10,13 @@
     .action.towishlist,
     .action.tocompare {
         cursor: pointer;
+
         &.checked {
             .lib-css(color, @addto-hover-color);
+
+            &:before {
+        		.lib-css(color, @addto-hover-color);
+        	}
         }
     }
 }
