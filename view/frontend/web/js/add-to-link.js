@@ -29,7 +29,7 @@ define([
             self._initOptions();
             self._subscribeEvents();
             self._initItem();
-            self._bindElement();  
+            self._bindElement();
         },
 
         _initOptions: function () {
