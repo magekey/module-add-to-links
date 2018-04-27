@@ -1,0 +1,50 @@
+<?php
+/**
+ * Copyright © MageKey. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+
+use MageKey\AddToLinks\Model\Config\Source\Templates as SourceTemplates;
+
+/** @var $block \Magento\Wishlist\Block\Catalog\Product\ProductList\Item\AddTo\Wishlist */
+
+$_product = $block->getProduct();
+$_dataHelper = $this->helper(\MageKey\AddToLinks\Helper\Data::class);
+$_wishlistHelper = $this->helper(\MageKey\AddToLinks\Helper\Wishlist::class);
+
+?>
+<?php if ($_wishlistHelper->isAllow()): ?>
+    <?php if ($_dataHelper->getTemplate() == SourceTemplates::TEMPLATE_CHECKBOX): ?>
+        <div class="mgk-addtolink action towishlist template-checkbox"
+           aria-label="<?= $block->escapeHtml(__('Add to Wish List')); ?>"
+           data-action="add-to-wishlist"
+           role="button">
+            <input type="checkbox"
+               id="mgk-addtolink-wishlist-list-<?= /* @escapeNotVerified */ $_product->getId(); ?>"
+               data-mage-init='{
+                   "MageKey_AddToLinks/js/add-to-wishlist": {
+                       "productId": <?= /* @escapeNotVerified */ $_product->getId(); ?>,
+                       "addParams": <?= /* @escapeNotVerified */ $_wishlistHelper->getAddParams($_product); ?>,
+                       "removeParams": <?= /* @escapeNotVerified */ $_wishlistHelper->getRemoveParams(); ?>,
+                       "loginUrl": "<?= /* @escapeNotVerified */ $_wishlistHelper->getLoginUrl(); ?>"
+                   }
+               }'/><label for="mgk-addtolink-wishlist-list-<?= /* @escapeNotVerified */ $_product->getId(); ?>"><?= /* @escapeNotVerified */ __('Add to Wish List') ?></label>
+        </div>
+    <?php else: ?>
+        <a class="mgk-addtolink action towishlist"
+           title="<?= $block->escapeHtml(__('Add to Wish List')); ?>"
+           aria-label="<?= $block->escapeHtml(__('Add to Wish List')); ?>"
+           data-mage-init='{
+               "MageKey_AddToLinks/js/add-to-wishlist": {
+                   "productId": <?= /* @escapeNotVerified */ $_product->getId(); ?>,
+                   "addParams": <?= /* @escapeNotVerified */ $_wishlistHelper->getAddParams($_product); ?>,
+                   "removeParams": <?= /* @escapeNotVerified */ $_wishlistHelper->getRemoveParams(); ?>,
+                   "loginUrl": "<?= /* @escapeNotVerified */ $_wishlistHelper->getLoginUrl(); ?>"
+               }
+           }'
+           data-action="add-to-wishlist"
+           role="button">
+            <span><?= /* @escapeNotVerified */ __('Add to Wish List') ?></span>
+        </a>
+    <?php endif; ?>
+<?php endif; ?>

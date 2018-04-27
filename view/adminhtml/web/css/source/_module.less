@@ -1,0 +1,20 @@
+// /**
+//  * Copyright © MageKey. All rights reserved.
+//  * See LICENSE.txt for license details.
+//  */
+
+.setMageKeyLogo(@module; @position) {
+    background-image: url('../@{module}/images/logo-menu.png');
+    background-repeat: no-repeat;
+    background-position: @position;
+}
+
+.section-config {
+    #catalog_mgk_addtolinks-head {
+        .setMageKeyLogo(
+            'MageKey_AddToLinks',
+            left center
+        );
+        padding-left: 3rem;
+    }
+}

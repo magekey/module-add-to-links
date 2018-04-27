@@ -3,20 +3,64 @@
 //  * See LICENSE.txt for license details.
 //  */
 
-.product-social-links,
-.block-bundle-summary,
-.product-item,
-.table-comparison {
-    .action.towishlist,
-    .action.tocompare {
-        cursor: pointer;
+//
+//  Libs
+//  _____________________________________________
 
-        &.checked {
-            .lib-css(color, @addto-hover-color);
+.lib-mgk-addtolink(
+    @_addto-hover-color: @addto-hover-color
+) {
+    .mgk-addtolink {
+        &.towishlist,
+        &.tocompare {
+            cursor: pointer;
 
-            &:before {
-        		.lib-css(color, @addto-hover-color);
-        	}
+            &.checked,
+            .checked {
+                .lib-css(color, @_addto-hover-color);
+
+                &:before {
+                    .lib-css(color, @_addto-hover-color);
+                }
+            }
         }
+    }
+}
+
+.lib-mgk-addtolink-checkbox(
+    @_label-font-size: @font-size__s
+) {
+    .mgk-addtolink {
+        &.template {
+            &-checkbox {
+                display: block;
+
+                &:before {
+                    display: none;
+                }
+                label {
+                    font-size: @_label-font-size
+                }
+            }
+        }
+    }
+}
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .product-items,
+    .products.list.items,
+    .product-info-main,
+    .product-options-bottom,
+    .product-addto-links,
+    .product-social-links,
+    .block-bundle-summary,
+    .product-item,
+    .table-comparison {
+        .lib-mgk-addtolink();
+        .lib-mgk-addtolink-checkbox();
     }
 }

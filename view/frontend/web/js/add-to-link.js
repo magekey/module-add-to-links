@@ -93,7 +93,7 @@ define([
                 var action = self.options.removeParams.action;
                 data.item = self.itemId();
             }
-            data.form_key = $('input[name="form_key"]').val();
+            data.form_key = $.mage.cookies.get('form_key');
             $.ajax({
                 url: action,
                 type: 'POST',
