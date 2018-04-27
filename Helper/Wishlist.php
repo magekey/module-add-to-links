@@ -16,12 +16,12 @@ class Wishlist extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * Route for wishlist add
      */
-    const ROUTE_WISHLIST_ADD = 'mgk_addtolinks/wishlist_index/add';
+    const ROUTE_WISHLIST_ADD = 'mgk-addtolinks/wishlist/add';
 
     /**
      * Route for wishlist remove
      */
-    const ROUTE_WISHLIST_REMOVE = 'mgk_addtolinks/wishlist_index/remove';
+    const ROUTE_WISHLIST_REMOVE = 'mgk-addtolinks/wishlist/remove';
 
     /**
      * @var StoreManagerInterface

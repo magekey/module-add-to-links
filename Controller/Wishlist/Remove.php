@@ -3,22 +3,17 @@
  * Copyright © MageKey. All rights reserved.
  * See LICENSE.txt for license details.
  */
-namespace MageKey\AddToLinks\Controller\Wishlist\Index;
+namespace MageKey\AddToLinks\Controller\Wishlist;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class Remove extends \Magento\Wishlist\Controller\Index\Remove
 {
+    use \MageKey\AddToLinks\Controller\ResponseTrait;
+
     /**
      * {@inheritdoc}
      */
     public function execute()
     {
-        try {
-            parent::execute();
-        } catch (\Exception $e) {
-            return;
-        }
+        return $this->executeParent();
     }
 }

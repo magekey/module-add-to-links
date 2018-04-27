@@ -11,12 +11,13 @@ define([
 ], function (ko, $, customerData, authenticationPopup) {
     "use strict";
 
-    var wishlistItems = ko.pureComputed(function () {
-        var wishlist = customerData.get('wishlist_items')();
-        if (wishlist && wishlist.items) {
-            return wishlist.items;
-        }
-        return [];
+    var wishlistItemsIds = ko.observable({});
+    customerData.get('wishlist-items').subscribe(function (data) {
+        var ids = {};
+        _.each(data.items, function (item) {
+            ids[item.product_id] = item.item_id;
+        });
+        wishlistItemsIds(ids);
     });
 
     $.widget('mage.mgkAddToWishlist', $.mage.mgkAddToLink, {
@@ -26,16 +27,14 @@ define([
             loginUrl: null
         },
 
-        initItem: function () {
+        _initItem: function () {
             var self = this;
-            self.itemId = ko.pureComputed(function () {
-                var value = null;
-                wishlistItems().forEach(function (item) {
-                    if (item.product_id == self.options.productId) {
-                        value = item.item_id;
-                    }
-                });
-                return value;
+            wishlistItemsIds.subscribe(function (ids) {
+                if (typeof ids[self.options.productId] != 'undefined') {
+                    self.itemId(ids[self.options.productId]);
+                } else {
+                    self.itemId(false);
+                }
             });
         },
 

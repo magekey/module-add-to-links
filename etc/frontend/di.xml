@@ -9,7 +9,7 @@
     <type name="Magento\Customer\CustomerData\SectionPoolInterface">
         <arguments>
             <argument name="sectionSourceMap" xsi:type="array">
-                <item name="wishlist_items" xsi:type="string">MageKey\AddToLinks\CustomerData\WishlistItems</item>
+                <item name="wishlist-items" xsi:type="string">MageKey\AddToLinks\CustomerData\WishlistItems</item>
             </argument>
         </arguments>
     </type>

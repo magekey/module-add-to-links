@@ -7,15 +7,13 @@ namespace MageKey\AddToLinks\Controller\Compare;
 
 class Add extends \Magento\Catalog\Controller\Product\Compare\Add
 {
+    use \MageKey\AddToLinks\Controller\ResponseTrait;
+
     /**
      * {@inheritdoc}
      */
     public function execute()
     {
-        try {
-            parent::execute();
-        } catch (\Exception $e) {
-            return;
-        }
+        return $this->executeParent();
     }
 }

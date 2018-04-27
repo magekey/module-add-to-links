@@ -7,7 +7,7 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
     <router id="standard">
-        <route id="mgk_addtolinks" frontName="mgk_addtolinks">
+        <route id="mgk_addtolinks" frontName="mgk-addtolinks">
             <module name="MageKey_AddToLinks" />
         </route>
     </router>

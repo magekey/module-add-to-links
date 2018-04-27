@@ -3,89 +3,96 @@
  * See LICENSE.txt for license details.
  */
 define([
-    'jquery'
-], function ($) {
+    'jquery',
+    'ko'
+], function ($, ko) {
     "use strict";
 
     $.widget('mage.mgkAddToLink', {
 
-        activeCheck: false,
+        actionReturn: false,
+        actionElement: null,
         options: {
             productId: null,
             addParams: {},
             removeParams: {},
-            checkedClass: 'checked'
+            checkedClass: 'checked',
+            actionSelector: null
         },
 
         _create: function () {
             var self = this;
-            self.initItem();
-            self.initElement();
-            self.initValue();
-            self.bindElement();
+
+            self.checked = ko.observable(false);
+            self.itemId = ko.observable(false);
+
+            self._initOptions();
+            self._subscribeEvents();
+            self._initItem();
+            self._bindElement();  
         },
 
-        initItem: function () {
-            return;
-        },
-
-        initElement: function () {
+        _initOptions: function () {
             var self = this;
-            if (self.element.is(':checkbox')) {
-                self.activeCheck = true;
-            }
-        },
-
-        initValue: function () {
-            var self = this;
-            if (self.itemId()) {
-                self.checkElementState();
-                if (self.activeCheck) {
-                    self.element.prop('checked', true);
-                }
-            }
-        },
-
-        getElementState: function () {
-            var self = this;
-            return self.element.hasClass(self.options.checkedClass);
-        },
-
-        checkElementState: function () {
-            var self = this;
-            self.element.addClass(self.options.checkedClass);
-        },
-
-        uncheckElementState: function () {
-            var self = this;
-            self.element.removeClass(self.options.checkedClass);
-        },
-
-        triggerElementState: function () {
-            if (this.getElementState()) {
-                this.uncheckElementState();
+            if (self.options.actionSelector) {
+                self.actionElement = self.element.find(self.options.actionSelector);
             } else {
-                this.checkElementState();
+                self.actionElement = self.element;
+            }
+            if (self.actionElement.is(':checkbox')) {
+                self.actionReturn = true;
             }
         },
 
-        bindElement: function () {
+        _subscribeEvents: function () {
             var self = this;
-            self.element.on({
+            self.checked.subscribe(function (val) {
+                self.updateElementState();
+            });
+            self.itemId.subscribe(function (val) {
+                self.checked(val ? true : false);
+            });
+        },
+
+        _initItem: function () {
+        },
+
+        _bindElement: function () {
+            var self = this;
+
+            self.actionElement.on({
                 'click': self.clickAction.bind(self)
             });
         },
 
-        clickAction: function () {
+        updateElementState: function () {
             var self = this;
-            self.triggerElementState();
-            self.sendAction();
-            return self.activeCheck;
+            if (this.checked()) {
+                self.element.addClass(self.options.checkedClass);
+                if (self.actionElement.is(':checkbox')) {
+                    self.actionElement.prop('checked', true);
+                }
+            } else {
+                self.element.removeClass(self.options.checkedClass);
+                if (self.actionElement.is(':checkbox')) {
+                    self.actionElement.prop('checked', false);
+                }
+            }
         },
 
-        sendAction: function () {
+        triggerElementState: function () {
+            this.checked(!this.checked());
+        },
+
+        clickAction: function () {
+            this.triggerElementState();
+            this._sendAction();
+            return this.actionReturn;
+        },
+
+        _sendAction: function (callback) {
             var self = this;
-            if (self.getElementState()) {
+            if (self.checked()) {
                 var data = self.options.addParams.data;
                 var action = self.options.addParams.action;
             } else {
@@ -97,7 +104,12 @@ define([
             $.ajax({
                 url: action,
                 type: 'POST',
-                data: data
+                data: data,
+                success: function (response) {
+                    if (callback) {
+                        callback(response);
+                    }
+                }
             });
         }
     });

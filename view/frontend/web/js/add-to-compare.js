@@ -3,33 +3,33 @@
  * See LICENSE.txt for license details.
  */
 define([
-    'ko',
     'jquery',
+    'ko',
+    'underscore',
     "Magento_Customer/js/customer-data",
     "MageKey_AddToLinks/js/add-to-link"
-], function (ko, $, customerData) {
+], function ($, ko, _, customerData) {
     "use strict";
 
-    var compareItems = ko.pureComputed(function () {
-        var compareProducts = customerData.get('compare-products')();
-        if (compareProducts && compareProducts.items) {
-            return compareProducts.items;
-        }
-        return [];
+    var compareProductsIds = ko.observable({});
+    customerData.get('compare-products').subscribe(function (data) {
+        var ids = {};
+        _.each(data.items, function (item) {
+            ids[item.id] = true;
+        });
+        compareProductsIds(ids);
     });
 
     $.widget('mage.mgkAddToCompare', $.mage.mgkAddToLink, {
 
-        initItem: function () {
+        _initItem: function () {
             var self = this;
-            self.itemId = ko.pureComputed(function () {
-                var value = null;
-                compareItems().forEach(function (item) {
-                    if (item.id == self.options.productId) {
-                        value = item.id;
-                    }
-                });
-                return value;
+            compareProductsIds.subscribe(function (ids) {
+                if (typeof ids[self.options.productId] != 'undefined') {
+                    self.itemId(self.options.productId);
+                } else {
+                    self.itemId(false);
+                }
             });
         }
     });

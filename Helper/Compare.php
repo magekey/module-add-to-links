@@ -13,12 +13,12 @@ class Compare extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * Route for compare add
      */
-    const ROUTE_COMPARE_ADD = 'mgk_addtolinks/compare/add';
+    const ROUTE_COMPARE_ADD = 'mgk-addtolinks/compare/add';
 
     /**
      * Route for compare remove
      */
-    const ROUTE_COMPARE_REMOVE = 'mgk_addtolinks/compare/remove';
+    const ROUTE_COMPARE_REMOVE = 'mgk-addtolinks/compare/remove';
 
     /**
      * @var PostHelper
