@@ -10,7 +10,7 @@
         <catalog>
             <mgk_addtolinks>
                 <enabled>1</enabled>
-                <template>default</template>
+                <template>checkbox</template>
             </mgk_addtolinks>
         </catalog>
     </default>
