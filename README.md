@@ -21,8 +21,8 @@ Add To Links Ajax
 
     composer require magekey/module-add-to-links
  
-[Install extension](https://devdocs.magento.com/guides/v2.3/comp-mgr/install-extensions.html#update-composer-json)
-    
+<a href="https://devdocs.magento.com/guides/v2.3/comp-mgr/install-extensions.html#update-composer-json" target="_blank">Install extension</a>
+  
 
 ## Versions tested
 > 2.2.3
