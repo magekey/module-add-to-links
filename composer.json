@@ -3,7 +3,7 @@
     "description": "Add To Links Ajax",
     "type": "magento2-module",
     "license": "MIT",
-    "version": "2.2.0",
+    "version": "2.3.0",
     "authors": [
         {
             "name": "Nicholas Miller",
