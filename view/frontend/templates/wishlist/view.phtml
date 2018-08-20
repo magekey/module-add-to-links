@@ -13,8 +13,8 @@ $_dataHelper = $this->helper(\MageKey\AddToLinks\Helper\Data::class);
 $_wishlistHelper = $this->helper(\MageKey\AddToLinks\Helper\Wishlist::class);
 
 ?>
-<?php if ($_wishlistHelper->isAllow()): ?>
-    <?php if ($_dataHelper->getTemplate() == SourceTemplates::TEMPLATE_CHECKBOX): ?>
+<?php if ($_wishlistHelper->isAllow()) : ?>
+    <?php if ($_dataHelper->getTemplate() == SourceTemplates::TEMPLATE_CHECKBOX) : ?>
         <div class="mgk-addtolink action towishlist template-checkbox"
            data-action="add-to-wishlist">
             <input type="checkbox"
@@ -28,7 +28,7 @@ $_wishlistHelper = $this->helper(\MageKey\AddToLinks\Helper\Wishlist::class);
                        }
                    }'/><label for="mgk-addtolink-wishlist-list-<?= /* @escapeNotVerified */ $_product->getId(); ?>"><?= /* @escapeNotVerified */ __('Add to Wish List') ?></label>
         </div>
-    <?php else: ?>
+    <?php else : ?>
         <a href="#"
            class="mgk-addtolink action towishlist"
            data-mage-init='{

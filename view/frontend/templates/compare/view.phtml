@@ -13,7 +13,7 @@ $_dataHelper = $this->helper(\MageKey\AddToLinks\Helper\Data::class);
 $_compareHelper = $this->helper(\MageKey\AddToLinks\Helper\Compare::class);
 
 ?>
-<?php if ($_dataHelper->getTemplate() == SourceTemplates::TEMPLATE_CHECKBOX): ?>
+<?php if ($_dataHelper->getTemplate() == SourceTemplates::TEMPLATE_CHECKBOX) : ?>
     <div class="mgk-addtolink action tocompare template-checkbox"
        aria-label="<?= $block->escapeHtml(__('Add to Compare')); ?>">
         <input type="checkbox"
@@ -26,7 +26,7 @@ $_compareHelper = $this->helper(\MageKey\AddToLinks\Helper\Compare::class);
                    }
                }'/><label for="mgk-addtolink-compare-view-<?= /* @escapeNotVerified */ $_product->getId(); ?>"><?= /* @escapeNotVerified */ __('Add to Compare') ?></label>
     </div>
-<?php else: ?>
+<?php else : ?>
     <a href="#"
        class="mgk-addtolink action tocompare"
        title="<?= $block->escapeHtml(__('Add to Compare')); ?>"

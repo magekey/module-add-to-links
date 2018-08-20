@@ -13,8 +13,8 @@ $_dataHelper = $this->helper(\MageKey\AddToLinks\Helper\Data::class);
 $_wishlistHelper = $this->helper(\MageKey\AddToLinks\Helper\Wishlist::class);
 
 ?>
-<?php if ($_wishlistHelper->isAllow()): ?>
-    <?php if ($_dataHelper->getTemplate() == SourceTemplates::TEMPLATE_CHECKBOX): ?>
+<?php if ($_wishlistHelper->isAllow()) : ?>
+    <?php if ($_dataHelper->getTemplate() == SourceTemplates::TEMPLATE_CHECKBOX) : ?>
         <div class="mgk-addtolink action towishlist template-checkbox"
            aria-label="<?= $block->escapeHtml(__('Add to Wish List')); ?>"
            data-action="add-to-wishlist"
@@ -30,7 +30,7 @@ $_wishlistHelper = $this->helper(\MageKey\AddToLinks\Helper\Wishlist::class);
                    }
                }'/><label for="mgk-addtolink-wishlist-list-<?= /* @escapeNotVerified */ $_product->getId(); ?>"><?= /* @escapeNotVerified */ __('Add to Wish List') ?></label>
         </div>
-    <?php else: ?>
+    <?php else : ?>
         <a class="mgk-addtolink action towishlist"
            title="<?= $block->escapeHtml(__('Add to Wish List')); ?>"
            aria-label="<?= $block->escapeHtml(__('Add to Wish List')); ?>"
